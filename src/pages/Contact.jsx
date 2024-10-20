@@ -80,7 +80,7 @@ function Contact() {
         <div className="text-center">
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700"
+            className="px-4 w-full py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-md hover:bg-blue-700"
           >
             Yuborish
           </button>

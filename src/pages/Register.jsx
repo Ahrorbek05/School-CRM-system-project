@@ -5,7 +5,7 @@ function Register() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    phone: "",
+    email: "",
     password: "",
     confirmPassword: ""
   });
@@ -17,9 +17,9 @@ function Register() {
     let formErrors = {};
     if (!formData.firstName) formErrors.firstName = "First name is required";
     if (!formData.lastName) formErrors.lastName = "Last name is required";
-    if (!formData.phone) formErrors.phone = "Phone number is required";
-    else if (!/^\d{9}$/.test(formData.phone))
-      formErrors.phone = "Phone number must be 9 digits";
+    if (!formData.email) formErrors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      formErrors.email = "Email address is invalid";
 
     if (!formData.password) formErrors.password = "Password is required";
     if (!formData.confirmPassword)
@@ -34,7 +34,8 @@ function Register() {
     e.preventDefault();
     const formErrors = validateForm();
     if (Object.keys(formErrors).length === 0) {
-      console.log("Form data:", formData);
+      // Save user data to localStorage for login validation
+      localStorage.setItem("registeredUser", JSON.stringify(formData));
       navigate("/login");
     } else {
       setErrors(formErrors);
@@ -45,23 +46,12 @@ function Register() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePhoneChange = (e) => {
-    const value = e.target.value;
-    if (/^\d*$/.test(value)) {
-      setFormData({ ...formData, phone: value });
-    }
-  };
-
   return (
     <div className="flex justify-center items-center h-screen">
-      <form
-        onSubmit={handleSubmit}
-        className="p-6 bg-white shadow-lg rounded-lg w-96"
-      >
-        <h2 className="text-2xl font-bold text-center text-purple-600 mb-6">
-          Register
-        </h2>
+      <form onSubmit={handleSubmit} className="p-6 bg-white shadow-lg rounded-lg w-96">
+        <h2 className="text-2xl font-bold text-center text-purple-600 mb-6">Register</h2>
 
+        {/* First Name Field */}
         <div className="form-control mb-4">
           <label className="label">
             <span className="label-text">First Name</span>
@@ -71,14 +61,13 @@ function Register() {
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
-            placeholder="First Name"
-            className="input input-bordered w-full"
+            placeholder="Enter your first name"
+            className="input input-bordered"
           />
-          {errors.firstName && (
-            <p className="text-red-500 text-sm">{errors.firstName}</p>
-          )}
+          {errors.firstName && <span className="text-red-500">{errors.firstName}</span>}
         </div>
 
+        {/* Last Name Field */}
         <div className="form-control mb-4">
           <label className="label">
             <span className="label-text">Last Name</span>
@@ -88,32 +77,29 @@ function Register() {
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
-            placeholder="Last Name"
-            className="input input-bordered w-full"
+            placeholder="Enter your last name"
+            className="input input-bordered"
           />
-          {errors.lastName && (
-            <p className="text-red-500 text-sm">{errors.lastName}</p>
-          )}
+          {errors.lastName && <span className="text-red-500">{errors.lastName}</span>}
         </div>
 
+        {/* Email Field */}
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">Phone Number</span>
+            <span className="label-text">Email</span>
           </label>
           <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handlePhoneChange}
-            placeholder="Phone"
-            className="input input-bordered w-full"
-            maxLength={10} // Telefon raqami uzunligini cheklash
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Enter your email"
+            className="input input-bordered"
           />
-          {errors.phone && (
-            <p className="text-red-500 text-sm">{errors.phone}</p>
-          )}
+          {errors.email && <span className="text-red-500">{errors.email}</span>}
         </div>
 
+        {/* Password Field */}
         <div className="form-control mb-4">
           <label className="label">
             <span className="label-text">Password</span>
@@ -123,14 +109,13 @@ function Register() {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Password"
-            className="input input-bordered w-full"
+            placeholder="Enter your password"
+            className="input input-bordered"
           />
-          {errors.password && (
-            <p className="text-red-500 text-sm">{errors.password}</p>
-          )}
+          {errors.password && <span className="text-red-500">{errors.password}</span>}
         </div>
 
+        {/* Confirm Password Field */}
         <div className="form-control mb-4">
           <label className="label">
             <span className="label-text">Confirm Password</span>
@@ -140,19 +125,13 @@ function Register() {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            placeholder="Confirm Password"
-            className="input input-bordered w-full"
+            placeholder="Confirm your password"
+            className="input input-bordered"
           />
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-          )}
+          {errors.confirmPassword && <span className="text-red-500">{errors.confirmPassword}</span>}
         </div>
 
-        <div className="form-control mt-6">
-          <button type="submit" className="btn bg-gradient-to-r from-purple-500 to-pink-500 w-full text-white">
-            Submit
-          </button>
-        </div>
+        <button className="btn btn-primary w-full">Register</button>
       </form>
     </div>
   );

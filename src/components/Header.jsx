@@ -8,15 +8,14 @@ function Header() {
   return (
     <header className="shadow-sm">
       <div className="container mx-auto flex items-center justify-center max-w-[1024px] py-4">
-        <img src={logo} alt="School Logo" className="h-10 w-10 rounded-full object-cover border-2 border-white" />
-
+        <img src={logo} alt="School Logo" onClick={() => window.location.href = '/'} className="h-20 w-20 cursor-pointer rounded-full object-cover border-2 border-white" />
         <div className="flex-grow mx-4">
           <nav className="bg-gradient-to-r from-purple-500 to-pink-500 py-2 px-6 rounded-full shadow-lg">
             <ul className="flex items-center justify-between space-x-8 text-white">
             <li>
                 <NavLink to="/" className="flex items-center space-x-1 hover:text-gray-200 transition duration-300">
                   <FaHome className="text-xl" />
-                  <span>Home</span>
+                  <span className='animate-pulse'>Home</span>
                 </NavLink>
               </li>
               <li>
@@ -51,8 +50,8 @@ function Header() {
               </li>
               <li>
                 <NavLink to="/news" className="flex items-center space-x-1 hover:text-gray-200 transition duration-300">
-                  <FaNewspaper className="text-xl" />
-                  <span>News</span>
+                  <FaNewspaper className="text-xl animate-pulse" />
+                  <span className='animate-pulse'>News</span>
                 </NavLink>
               </li>
               <li>
